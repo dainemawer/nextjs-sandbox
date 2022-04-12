@@ -12,13 +12,6 @@ const Post = ({ post }) => {
         <Layout>
             <Head>
                 <title>News Article {id}</title>
-                <style amp-custom>
-                   {`
-                    body {
-                        background-color: orange
-                    }
-                   `}
-                </style>
             </Head>
             <Jumbotron title={title} description={body} />
             <List />

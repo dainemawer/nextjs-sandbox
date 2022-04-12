@@ -19,6 +19,7 @@ const Header = () => {
                             <li><a href="#">Example 3</a></li>
                         </ul>
                     </amp-sidebar>
+                    <style jsx>{`header { background: orange }`}</style>
                 </>
             ) : (
             <header>
