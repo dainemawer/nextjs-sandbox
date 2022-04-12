@@ -1,8 +1,9 @@
 import Layout from '@components/Layout/Layout'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 
-const Home = () => {
+const Home = ({ posts }) => {
     return (
         <>
             <Head>
@@ -52,87 +53,19 @@ const Home = () => {
                 </div>
                 <div className="container">
                     <div className="row mb-4 py-5">
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
+                        {posts && posts.map(post => (
+                            <div key={`post-${post.id}`} className="col-md-4 mb-4">
+                                <div className="card">
                                     <div className="card-body">
-                                        <h5 className="card-title">Card title</h5>
-                                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                        <a href="#" className="btn btn-primary">Go somewhere</a>
+                                        <h5 className="card-title">{post.title}</h5>
+                                        <p className="card-text">{post.body}</p>
+                                        <Link href={`/news/${post.id}`}>
+                                            <a className="btn btn-primary">Read</a>
+                                        </Link>
                                     </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="col-md-4 mb-4">
-                            <div className="card">
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card&apos;s content.</p>
-                                    <a href="#" className="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
                 <div className="row align-items-md-stretch mb-4 py-5">
@@ -208,6 +141,14 @@ const Home = () => {
         </>
         
     )
+}
+
+export async function getServerSideProps() {
+    const res = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const posts = await res.json();
+    const featured = posts.slice(0, 9);
+
+    return { props: { posts: featured } };
 }
 
 export default Home;

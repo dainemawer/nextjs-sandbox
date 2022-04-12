@@ -1,3 +1,6 @@
 module.exports = {
-    experimental: { optimizeCss: true }
+    experimental: { optimizeCss: true },
+    images: {
+        domains: ['getbootstrap.com'],
+    },
 }

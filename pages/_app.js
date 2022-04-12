@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { ConfigContext } from '@context/config';
 import { useAmp } from 'next/amp'
 
